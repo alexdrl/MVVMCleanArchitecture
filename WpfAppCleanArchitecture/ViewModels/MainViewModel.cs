@@ -8,10 +8,11 @@ using System.Diagnostics;
 using System.Windows;
 
 using Wpf.Application.DTOs;
-using Wpf.Domain.Entities;
-
+using Wpf.Application.Interfaces;
 
 using WpfAppCleanArchitecture.Dialogs;
+
+namespace WpfAppCleanArchitecture.ViewModels;
 
 public partial class MainViewModel(ICustomerService customerService) : ObservableObject
 {

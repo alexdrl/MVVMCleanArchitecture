@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+namespace Wpf.Infrastructure.Data;
+
+public class DesignTimeDbContextFactory
 {
     public AppDbContext CreateDbContext(string[] args)
     {

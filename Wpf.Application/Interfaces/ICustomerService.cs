@@ -1,5 +1,7 @@
 using Wpf.Application.DTOs;
 
+namespace Wpf.Application.Interfaces;
+
 public interface ICustomerService
 {
     ValueTask<IReadOnlyList<CustomerDto>> GetAllCustomersAsync(CancellationToken cancellationToken);

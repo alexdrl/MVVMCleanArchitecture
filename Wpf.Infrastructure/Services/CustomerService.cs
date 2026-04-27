@@ -3,8 +3,12 @@
 using Microsoft.EntityFrameworkCore;
 
 using Wpf.Application.DTOs;
+using Wpf.Application.Interfaces;
 using Wpf.Domain.Entities;
+using Wpf.Infrastructure.Data;
 using Wpf.Infrastructure.Mapping;
+
+namespace Wpf.Infrastructure.Services;
 
 public class CustomerService(
     IDbContextFactory<AppDbContext> dbContextFactory,

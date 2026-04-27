@@ -16,6 +16,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2533C234-D3E9-4DFE-8C59-BEBB8E8EE4AF}"
 	ProjectSection(SolutionItems) = preProject
 		.github\copilot-instructions.md = .github\copilot-instructions.md
+		.github\instructions\csharp.instructions.md = .github\instructions\csharp.instructions.md
+		.github\instructions\viewmodels.instructions.md = .github\instructions\viewmodels.instructions.md
+		.github\instructions\xaml.instructions.md = .github\instructions\xaml.instructions.md
 	EndProjectSection
 EndProject
 Global

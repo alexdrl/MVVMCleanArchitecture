@@ -10,81 +10,81 @@ using Microsoft.Extensions.Hosting;
 using System.Windows;
 
 using Wpf.Application.DTOs;
+using Wpf.Application.Interfaces;
 using Wpf.Application.Validaton;
 using Wpf.Infrastructure.Data;
 using Wpf.Infrastructure.Mapping;
+using Wpf.Infrastructure.Services;
 
 using WpfAppCleanArchitecture.View;
+using WpfAppCleanArchitecture.ViewModels;
 
-namespace WpfAppCleanArchitecture
+namespace WpfAppCleanArchitecture;
+
+/// <summary>
+/// Interaction logic for App.xaml
+/// </summary>
+public partial class App : Application
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+    public static IHost AppHost { get; private set; } = null!;
+
+    public App()
     {
-        public static IHost AppHost { get; private set; } = null!;
-
-        public App()
-        {
-            AppHost = Host.CreateDefaultBuilder()
-                .ConfigureAppConfiguration(config =>
-                {
-                    config.AddJsonFile("appsettings.json", optional: true);
-                })
-                .ConfigureServices((context, services) =>
-                {
-                    string connectionString = context.Configuration.GetConnectionString("Default")
-                                              ?? "Data Source=app.db";
-
-                    services.AddDbContext<AppDbContext>(options =>
-                        options.UseSqlite("Data Source=app.db"));
-
-                    services.AddDbContextFactory<AppDbContext>(options =>
-                        options.UseSqlite("Data Source=app.db"));
-
-                    services.AddSingleton<IValidator<CustomerDto>, CustomerValidator>();
-                    services.AddSingleton<IValidator<OrderDto>, OrderValidator>();
-
-                    services.AddScoped<ICustomerService, CustomerService>();
-
-                    services.AddSingleton<CustomerMapper>();
-                    services.AddSingleton<OrderMapper>();
-
-                    services.AddSingleton<MainViewModel>();
-                    services.AddSingleton<MainWindow>(provider =>
-                    {
-                        var vm = provider.GetRequiredService<MainViewModel>();
-                        return new MainWindow { DataContext = vm };
-                    });
-                })
-                .Build();
-        }
-
-        protected override async void OnStartup(StartupEventArgs e)
-        {
-            using (var scope = AppHost.Services.CreateScope())
+        AppHost = Host.CreateDefaultBuilder()
+            .ConfigureAppConfiguration(config =>
             {
-                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                config.AddJsonFile("appsettings.json", optional: true);
+            })
+            .ConfigureServices((context, services) =>
+            {
+                string connectionString = context.Configuration.GetConnectionString("Default")
+                                          ?? "Data Source=app.db";
 
-                db.Database.Migrate(); // ✅ This ensures schema is created/applied
+                services.AddDbContext<AppDbContext>(options =>
+                    options.UseSqlite("Data Source=app.db"));
 
-                AppDbSeeder.Seed(db); // ✅ Seed after migration
-            }
+                services.AddDbContextFactory<AppDbContext>(options =>
+                    options.UseSqlite("Data Source=app.db"));
 
+                services.AddSingleton<IValidator<CustomerDto>, CustomerValidator>();
+                services.AddSingleton<IValidator<OrderDto>, OrderValidator>();
 
-            await AppHost.StartAsync();
-            var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
-            mainWindow.Show();
-            base.OnStartup(e);
-        }
+                services.AddScoped<ICustomerService, CustomerService>();
 
-        protected override async void OnExit(ExitEventArgs e)
-        {
-            await AppHost.StopAsync();
-            AppHost.Dispose();
-            base.OnExit(e);
-        }
+                services.AddSingleton<CustomerMapper>();
+                services.AddSingleton<OrderMapper>();
+
+                services.AddSingleton<MainViewModel>();
+                services.AddSingleton<MainWindow>(provider =>
+                {
+                    var vm = provider.GetRequiredService<MainViewModel>();
+                    return new MainWindow { DataContext = vm };
+                });
+            })
+            .Build();
     }
 
+    protected override async void OnStartup(StartupEventArgs e)
+    {
+        using (var scope = AppHost.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+            db.Database.Migrate();
+
+            AppDbSeeder.Seed(db);
+        }
+
+        await AppHost.StartAsync();
+        var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
+        mainWindow.Show();
+        base.OnStartup(e);
+    }
+
+    protected override async void OnExit(ExitEventArgs e)
+    {
+        await AppHost.StopAsync();
+        AppHost.Dispose();
+        base.OnExit(e);
+    }
 }
