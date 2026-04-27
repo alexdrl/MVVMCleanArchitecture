@@ -18,11 +18,19 @@ public partial class CustomerDialogViewModel : ObservableObject
     [ObservableProperty]
     private string name = string.Empty;
 
+    [ObservableProperty]
+    private string lastName = string.Empty;
+
     public bool IsNew => Customer.Id == 0;
 
-    public bool CanSave => !string.IsNullOrWhiteSpace(name);
+    public bool CanSave => !string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(lastName);
 
     partial void OnNameChanged(string value)
+    {
+        OnPropertyChanged(nameof(CanSave));
+    }
+
+    partial void OnLastNameChanged(string value)
     {
         OnPropertyChanged(nameof(CanSave));
     }
@@ -31,12 +39,14 @@ public partial class CustomerDialogViewModel : ObservableObject
     {
         Customer = customerDto;
         Name = customerDto.Name;
+        LastName = customerDto.LastName;
     }
 
     [RelayCommand]
     private void Save()
     {
         Customer.Name = Name;
+        Customer.LastName = LastName;
         DialogResult = true;
     }
 

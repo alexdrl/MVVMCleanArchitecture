@@ -14,6 +14,10 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
                .IsRequired()
                .HasMaxLength(200);
 
+        builder.Property(e => e.LastName)
+               .IsRequired()
+               .HasMaxLength(200);
+
         builder.HasMany(e => e.Orders)
                .WithOne(o => o.Customer)
                .HasForeignKey(o => o.CustomerId)

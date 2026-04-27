@@ -15,5 +15,11 @@ public class CustomerValidator : AbstractValidator<CustomerDto>
             .WithMessage("Customer name is required.")
             .MaximumLength(200)
             .WithMessage("Name cannot exceed 200 characters.");
+
+        RuleFor(c => c.LastName)
+            .NotEmpty()
+            .WithMessage("Customer last name is required.")
+            .MaximumLength(200)
+            .WithMessage("Last name cannot exceed 200 characters.");
     }
 }

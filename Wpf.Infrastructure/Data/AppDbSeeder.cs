@@ -13,9 +13,9 @@ public static class AppDbSeeder
 
         var customers = new List<Customer>
         {
-            new("Alice"),
-            new("Bob"),
-            new("Charlie")
+            new("Alice", "Smith"),
+            new("Bob", "Johnson"),
+            new("Charlie", "Williams")
         };
 
         customers[0].AddOrder("Order A1");

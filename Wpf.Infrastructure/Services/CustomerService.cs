@@ -45,7 +45,7 @@ public class CustomerService(
             throw new ValidationException(result.Errors);
 
         using var db = await _dbContextFactory.CreateDbContextAsync(token);
-        var customer = new Customer(dto.Name);
+        var customer = new Customer(dto.Name, dto.LastName);
         db.Customers.Add(customer);
         await db.SaveChangesAsync(token);
         return customer.Id;
@@ -63,7 +63,7 @@ public class CustomerService(
         if (customer is null) 
             throw new Exception("Customer not found.");
 
-        customer.Rename(dto.Name); // assuming domain method
+        customer.Rename(dto.Name, dto.LastName);
         await db.SaveChangesAsync(token);
     }
 

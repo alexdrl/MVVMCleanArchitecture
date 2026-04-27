@@ -7,12 +7,15 @@ namespace Wpf.Domain.Entities;
 public class Customer : BaseEntity<int>, IAggregateRoot
 {
     public string Name { get; protected set; } = string.Empty;
+    public string LastName { get; protected set; } = string.Empty;
 
-    public Customer(string name)
+    public Customer(string name, string lastName)
     {
         Guard.AgainstNullOrWhiteSpace(name, nameof(name));
+        Guard.AgainstNullOrWhiteSpace(lastName, nameof(lastName));
 
         this.Name = name;
+        this.LastName = lastName;
     }
 
     public ICollection<Order> Orders { get; set; } = [];
@@ -28,10 +31,12 @@ public class Customer : BaseEntity<int>, IAggregateRoot
         });
     }
 
-    public void Rename(string name)
+    public void Rename(string name, string lastName)
     {
         Guard.AgainstNullOrWhiteSpace(name, nameof(name));
+        Guard.AgainstNullOrWhiteSpace(lastName, nameof(lastName));
 
-        this.Name = name;   
+        this.Name = name;
+        this.LastName = lastName;
     }
 }

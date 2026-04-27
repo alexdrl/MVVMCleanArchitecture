@@ -40,6 +40,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" Width="Auto" />
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
 
