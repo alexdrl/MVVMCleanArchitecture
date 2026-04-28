@@ -12,6 +12,9 @@ Wpf.Infrastructure/   → EF Core, SQLite, Mapperly mappers, Service implementat
 WpfAppCleanArchitecture/ → WPF UI, ViewModels (MVVM), Dialogs
 ```
 
+The application strings MUST be translatable, so all user-facing text is stored in `Resources.resx` files and accessed via `Properties.Resources`.
+Languages are spanish and english.
+
 **Dependency Flow**: UI → Infrastructure → Application → Domain → SharedKernel
 
 ## Key Patterns

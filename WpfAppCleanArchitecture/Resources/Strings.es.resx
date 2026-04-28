@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- Window Titles -->
+  <data name="WindowTitleMain" xml:space="preserve">
+    <value>Gestión de Clientes</value>
+  </data>
+  <data name="WindowTitleCustomer" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+
+  <!-- Buttons -->
+  <data name="ButtonAddCustomer" xml:space="preserve">
+    <value>Añadir Cliente</value>
+  </data>
+  <data name="ButtonEditCustomer" xml:space="preserve">
+    <value>Editar Cliente</value>
+  </data>
+  <data name="ButtonDeleteCustomer" xml:space="preserve">
+    <value>Eliminar Cliente</value>
+  </data>
+  <data name="ButtonLoadCustomers" xml:space="preserve">
+    <value>Cargar Clientes</value>
+  </data>
+  <data name="ButtonCancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+
+  <!-- Labels -->
+  <data name="LabelCustomerName" xml:space="preserve">
+    <value>Nombre del Cliente:</value>
+  </data>
+  <data name="LabelLastName" xml:space="preserve">
+    <value>Apellido:</value>
+  </data>
+
+  <!-- DataGrid Columns -->
+  <data name="ColumnId" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="ColumnName" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="ColumnLastName" xml:space="preserve">
+    <value>Apellido</value>
+  </data>
+  <data name="ColumnDescription" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+</root>

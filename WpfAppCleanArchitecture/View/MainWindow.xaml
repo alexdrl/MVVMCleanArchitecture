@@ -3,11 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfAppCleanArchitecture.View" 
         xmlns:converters="clr-namespace:WpfAppCleanArchitecture.Converters"
+        xmlns:vm="clr-namespace:WpfAppCleanArchitecture.ViewModels"
+        xmlns:res="clr-namespace:WpfAppCleanArchitecture.Resources"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
+        Title="{x:Static res:Strings.WindowTitleMain}" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}">
     <Window.Resources>
         <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
     </Window.Resources>
@@ -15,13 +17,13 @@
         <!-- Toolbar -->
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10">
 
-            <Button Content="Add Customer" Command="{Binding AddCustomerCommand}" Margin="0,0,10,0"/>
-            <Button Content="Edit Customer" Command="{Binding EditCustomerCommand}" Margin="0,0,10,0" IsEnabled="{Binding SelectedCustomer, Converter={StaticResource NullToBoolConverter}}" />
-            <Button Content="Delete Customer" Command="{Binding DeleteCustomerCommand}" IsEnabled="{Binding SelectedCustomer, Converter={StaticResource NullToBoolConverter}}" />
+            <Button Content="{x:Static res:Strings.ButtonAddCustomer}" Command="{Binding AddCustomerCommand}" Margin="0,0,10,0"/>
+            <Button Content="{x:Static res:Strings.ButtonEditCustomer}" Command="{Binding EditCustomerCommand}" Margin="0,0,10,0" IsEnabled="{Binding SelectedCustomer, Converter={StaticResource NullToBoolConverter}}" />
+            <Button Content="{x:Static res:Strings.ButtonDeleteCustomer}" Command="{Binding DeleteCustomerCommand}" IsEnabled="{Binding SelectedCustomer, Converter={StaticResource NullToBoolConverter}}" />
 
-            <Button Content="Load Customers" Margin="0,0,10,0"
+            <Button Content="{x:Static res:Strings.ButtonLoadCustomers}" Margin="0,0,10,0"
                     Command="{Binding LoadCustomersCommand}" />
-            <Button Content="Cancel" 
+            <Button Content="{x:Static res:Strings.ButtonCancel}"
                     Command="{Binding CancelLoadingCommand}" />
         </StackPanel>
 
@@ -38,9 +40,9 @@
                       AutoGenerateColumns="False"
                       CanUserAddRows="False" Margin="5">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" Width="Auto" />
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*" />
+                    <DataGridTextColumn Header="{x:Static res:Strings.ColumnId}" Binding="{Binding Id}" IsReadOnly="True" Width="Auto" />
+                    <DataGridTextColumn Header="{x:Static res:Strings.ColumnName}" Binding="{Binding Name}" Width="*" />
+                    <DataGridTextColumn Header="{x:Static res:Strings.ColumnLastName}" Binding="{Binding LastName}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -50,11 +52,11 @@
                       AutoGenerateColumns="False"
                       CanUserAddRows="False" Margin="5">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" Width="Auto" />
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                    <DataGridTextColumn Header="{x:Static res:Strings.ColumnId}" Binding="{Binding Id}" IsReadOnly="True" Width="Auto" />
+                    <DataGridTextColumn Header="{x:Static res:Strings.ColumnDescription}" Binding="{Binding Description}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
     </DockPanel>
- 
+
 </Window>

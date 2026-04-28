@@ -12,6 +12,35 @@ applyTo: '**/*.xaml'
 - Pattern: **MVVM** — no code-behind logic; all behavior via `{Binding}` to ViewModel
 - Encoding: **UTF-8**, line endings: **CRLF**
 
+## Localization & Static Strings
+
+- ❌ **Never hardcode user-facing text** directly in XAML (labels, button content, window titles, column headers, etc.)
+- All static strings **must** be stored in resource files located at `WpfAppCleanArchitecture/Resources/`:
+  - `Strings.resx` — English (default, neutral culture)
+  - `Strings.es.resx` — Spanish (`es` culture)
+- The default `Strings.resx` must use `PublicResXFileCodeGenerator` to generate `Strings.Designer.cs`, enabling `{x:Static}` access
+- Always declare the `res` namespace in every XAML file that uses strings:
+  ```xml
+  xmlns:res="clr-namespace:WpfAppCleanArchitecture.Resources"
+  ```
+- Reference strings via `{x:Static res:Strings.KeyName}`:
+  ```xml
+  <Button Content="{x:Static res:Strings.ButtonSave}" />
+  <TextBlock Text="{x:Static res:Strings.LabelCustomerName}" />
+  <DataGridTextColumn Header="{x:Static res:Strings.ColumnName}" ... />
+  Title="{x:Static res:Strings.WindowTitleMain}"
+  ```
+- **Naming conventions** for resource keys (PascalCase, prefixed by category):
+  | Prefix | Category | Example |
+  |---|---|---|
+  | `WindowTitle` | Window/dialog titles | `WindowTitleMain` |
+  | `Button` | Button content | `ButtonSave`, `ButtonCancel` |
+  | `Label` | Form labels / TextBlocks | `LabelCustomerName` |
+  | `Column` | DataGrid column headers | `ColumnId`, `ColumnLastName` |
+  | `Message` | MessageBox / status text | `MessageConfirmDelete` |
+- Both `Strings.resx` and `Strings.es.resx` must always contain the **same set of keys**
+- When adding a new key, add it to **both** files simultaneously
+
 ## File & Namespace Organization
 
 - One view per file; file name matches the class name (e.g., `MainWindow.xaml`, `CustomerDialog.xaml`)
@@ -99,7 +128,8 @@ applyTo: '**/*.xaml'
 ## Common Pitfalls
 
 - ❌ Do not use `AutoGenerateColumns="True"` on `DataGrid`
-- ❌ Do not hardcode text that should come from a binding
+- ❌ Do not hardcode user-facing text — always use `{x:Static res:Strings.KeyName}` from the resource files
+- ❌ Do not add a key to only one `.resx` file — always add to both `Strings.resx` and `Strings.es.resx`
 - ❌ Do not use `x:Name` to access controls in code-behind for data operations
 - ❌ Do not use `ElementName` bindings when a ViewModel property can serve the same purpose
 - ❌ Do not forget `mc:Ignorable="d"` when using design-time attributes
