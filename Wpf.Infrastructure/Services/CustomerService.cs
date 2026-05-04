@@ -2,6 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 
+using Wpf.Application.Common;
 using Wpf.Application.DTOs;
 using Wpf.Application.Interfaces;
 using Wpf.Domain.Entities;
@@ -71,12 +72,24 @@ public class CustomerService(
         await db.SaveChangesAsync(token);
     }
 
-    public async ValueTask DeleteCustomerAsync(int id, CancellationToken token)
+    public async ValueTask<Result<bool>> DeleteCustomerAsync(int id, CancellationToken token)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync(token);
-        var entity = await db.Customers.FindAsync([id], token);
-        if (entity is null) return;
+        var entity = await db.Customers
+            .Include(c => c.Orders)
+            .FirstOrDefaultAsync(c => c.Id == id, token);
+
+        if (entity is null)
+            return Result<bool>.Failure("Customer not found.");
+
+        if (entity.Name.Equals("Alejandro", StringComparison.OrdinalIgnoreCase))
+            return Result<bool>.Failure($"Customer '{entity.Name} {entity.LastName}' cannot be deleted.");
+
+        if (entity.Orders.Count > 0)
+            return Result<bool>.Failure($"Cannot delete customer '{entity.Name} {entity.LastName}' because they have {entity.Orders.Count} associated order(s).");
+
         db.Customers.Remove(entity);
         await db.SaveChangesAsync(token);
+        return Result<bool>.Success(true);
     }
 }

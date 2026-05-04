@@ -8,7 +8,8 @@ Follow these steps in order:
 
 ## 1. Domain Layer
 - Add the property to `[EntityName]` with a **protected setter** and a default value.
-- Update the constructor to accept and guard the new parameter using `Guard.AgainstNullOrWhiteSpace` (or appropriate guard) and assign it.
+- Update the constructor to accept and guard the new parameter using `Guard.AgainstN
+- llOrWhiteSpace` (or appropriate guard) and assign it.
 - Update any behavior methods that modify the entity (e.g., `Rename`, `Update`) to also accept and apply the new property.
 
 ## 2. Application Layer

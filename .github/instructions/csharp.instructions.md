@@ -78,7 +78,8 @@ applyTo: '**/*.cs'
 
 ## Guard Clauses
 
-- Validate domain invariants via Guard clauses at the top of constructors and behavior methods
+- Validate domain invariants via Guard clauses at the top of constructors and behavior methods.
+- Guard clause code is present in Wpf.Domain Guard.cs.
   ```csharp
   Guard.AgainstNullOrWhiteSpace(name, nameof(name));
   ```

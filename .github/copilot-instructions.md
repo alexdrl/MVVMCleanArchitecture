@@ -12,8 +12,7 @@ Wpf.Infrastructure/   → EF Core, SQLite, Mapperly mappers, Service implementat
 WpfAppCleanArchitecture/ → WPF UI, ViewModels (MVVM), Dialogs
 ```
 
-The application strings MUST be translatable, so all user-facing text is stored in `Resources.resx` files and accessed via `Properties.Resources`.
-Languages are spanish and english.
+The application strings MUST be translatable, so all user-facing text is stored in `Resources.resx` files and accessed via `Properties.Resources`. Languages are Spanish and English.
 
 **Dependency Flow**: UI → Infrastructure → Application → Domain → SharedKernel
 
@@ -29,7 +28,9 @@ Languages are spanish and english.
 ### Application Layer
 - **DTOs** for data transfer (e.g., `CustomerDto`, `OrderDto`)
 - **Service interfaces** define contracts (e.g., `ICustomerService`)
+  - ⚠️ Queries and commands are intentionally kept in a **single interface per aggregate** (e.g., `ICustomerService`). Do NOT suggest splitting into `ICustomerQueryService` / `ICustomerCommandService`. See [ADR-001](../Docs/adr/ADR-001-service-interface-design.md) for the rationale.
 - **FluentValidation** validators in `Wpf.Application/Validaton/` namespace
+- **`Result<T>`** in `Wpf.Application/Common/Result.cs` for service operations that can fail due to business rules (not input validation). Use `Result<bool>` for delete/command operations.
 - Example validator pattern:
   ```csharp
   public class CustomerValidator : AbstractValidator<CustomerDto>
@@ -46,7 +47,15 @@ Languages are spanish and english.
 - Always use `using var db = await _dbContextFactory.CreateDbContextAsync(cancellation)`
 - **Mapperly** for entity↔DTO mapping: `[Mapper] public partial class CustomerMapper`
 - **IEntityTypeConfiguration** for EF Core config (see `OrderConfiguration.cs`)
-- Services validate DTOs before operations and throw `ValidationException` on failure
+- Services validate DTOs with FluentValidation before operations and throw `ValidationException` on failure
+- For operations with **business rule validations** (e.g., delete constraints), return `Result<T>` instead of throwing exceptions:
+  ```csharp
+  public async ValueTask<Result<bool>> DeleteCustomerAsync(int id, CancellationToken token)
+  {
+      // business rule checks → return Result<bool>.Failure("reason")
+      // success path → return Result<bool>.Success(true)
+  }
+  ```
 
 ### Presentation Layer (MVVM)
 - **CommunityToolkit.Mvvm**: `ObservableObject`, `[ObservableProperty]`, `[RelayCommand]`
@@ -96,8 +105,9 @@ dotnet ef database update -s WpfAppCleanArchitecture
 
 ### Error Handling
 - **Domain**: Throw exceptions for invariant violations via Guard clauses
-- **Application**: Throw `ValidationException` for business rule violations
-- **UI**: Catch exceptions in ViewModels, display via `MessageBox`
+- **Application/Infrastructure — input validation**: Throw `ValidationException` (FluentValidation) for DTO/input rule violations
+- **Application/Infrastructure — business rules**: Return `Result<T>` (`Result<bool>.Failure("message")`) for recoverable business rule violations (e.g., delete blocked by related data, forbidden names)
+- **UI**: Check `result.IsSuccess` for `Result<T>`; show `result.ErrorMessage` via `MessageBox` with `MessageBoxImage.Warning`. Catch exceptions for unexpected errors.
 
 ## Adding New Features
 
@@ -109,6 +119,8 @@ dotnet ef database update -s WpfAppCleanArchitecture
 
 ### New Service Operation
 1. Define method in service interface (`Wpf.Application/Interfaces/`)
+   - Use `ValueTask<Result<bool>>` return type when the operation can fail due to business rules
+   - Use `ValueTask` (void) or `ValueTask<T>` + throw `ValidationException` for input validation failures
 2. Implement in service class (`Wpf.Infrastructure/Services/`)
 3. Create DTO if needed (`Wpf.Application/DTOs/`)
 4. Add Mapperly mapper method (`Wpf.Infrastructure/Mapping/`)
@@ -135,3 +147,5 @@ dotnet ef database update -s WpfAppCleanArchitecture
 - ❌ Don't validate in Domain—use Application validators
 - ❌ Don't inject Application/Infrastructure into Domain—keep it pure
 - ❌ Don't forget to call `.Migrate()` before seeding data
+- ❌ Don't throw exceptions for expected business rule violations in services—return `Result<T>.Failure("message")` instead
+- ❌ Don't ignore `Result<T>.IsSuccess` in ViewModels—always check and display `ErrorMessage` when `IsSuccess` is false

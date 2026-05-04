@@ -102,7 +102,13 @@ public partial class MainViewModel(ICustomerService customerService) : Observabl
 
         try
         {
-            await _customerService.DeleteCustomerAsync(SelectedCustomer.Id, CancellationToken.None);
+            var deleteResult = await _customerService.DeleteCustomerAsync(SelectedCustomer.Id, CancellationToken.None);
+            if (!deleteResult.IsSuccess)
+            {
+                MessageBox.Show(deleteResult.ErrorMessage, "Cannot Delete", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             Customers.Remove(SelectedCustomer);
             SelectedCustomer = null;
         }
