@@ -185,5 +185,50 @@ namespace WpfAppCleanArchitecture.Resources {
                 return ResourceManager.GetString("WindowTitleMain", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Add Order.
+        /// </summary>
+        public static string WindowTitleOrder {
+            get {
+                return ResourceManager.GetString("WindowTitleOrder", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Add Order.
+        /// </summary>
+        public static string ButtonAddOrder {
+            get {
+                return ResourceManager.GetString("ButtonAddOrder", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        public static string LabelOrderDescription {
+            get {
+                return ResourceManager.GetString("LabelOrderDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Error loading orders:.
+        /// </summary>
+        public static string ErrorLoadingOrders {
+            get {
+                return ResourceManager.GetString("ErrorLoadingOrders", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Error adding order:.
+        /// </summary>
+        public static string ErrorAddingOrder {
+            get {
+                return ResourceManager.GetString("ErrorAddingOrder", resourceCulture);
+            }
+        }
     }
 }

@@ -20,6 +20,9 @@
             <Button Content="{x:Static res:Strings.ButtonAddCustomer}" Command="{Binding AddCustomerCommand}" Margin="0,0,10,0"/>
             <Button Content="{x:Static res:Strings.ButtonEditCustomer}" Command="{Binding EditCustomerCommand}" Margin="0,0,10,0" IsEnabled="{Binding SelectedCustomer, Converter={StaticResource NullToBoolConverter}}" />
             <Button Content="{x:Static res:Strings.ButtonDeleteCustomer}" Command="{Binding DeleteCustomerCommand}" IsEnabled="{Binding SelectedCustomer, Converter={StaticResource NullToBoolConverter}}" />
+            <Button Content="{x:Static res:Strings.ButtonAddOrder}" Command="{Binding AddOrderCommand}"
+                    Margin="10,0,0,0"
+                    IsEnabled="{Binding SelectedCustomer, Converter={StaticResource NullToBoolConverter}}" />
 
             <Button Content="{x:Static res:Strings.ButtonLoadCustomers}" Margin="0,0,10,0"
                     Command="{Binding LoadCustomersCommand}" />

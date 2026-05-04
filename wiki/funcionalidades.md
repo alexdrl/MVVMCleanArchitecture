@@ -60,6 +60,15 @@ Los pedidos están **asociados a un cliente** y se gestionan desde el contexto d
 - Los pedidos se añaden llamando al método de dominio `Customer.AddOrder(description)`, que encapsula la lógica de creación e impide descripciones vacías.
 - El listado de pedidos de un cliente se puede consultar mediante `GetOrdersByCustomerIdAsync`.
 
+### Crear un pedido
+
+1. El usuario selecciona un cliente y pulsa **Añadir pedido** en la ventana principal.
+1. El botón **Añadir pedido** solo está habilitado si el cliente seleccionado no es nulo.
+1. Se abre un diálogo para introducir la descripción del pedido.
+1. El botón **Guardar** solo se habilita cuando la descripción no está vacía.
+1. Al confirmar, el servicio valida la descripción y persiste el pedido en la base de datos.
+1. El nuevo pedido aparece en el listado del cliente inmediatamente.
+
 ---
 
 ## Flujos internos relevantes

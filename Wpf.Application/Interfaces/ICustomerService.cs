@@ -10,4 +10,5 @@ public interface ICustomerService
     ValueTask<int> AddCustomerAsync(CustomerDto dto, CancellationToken token);
     ValueTask UpdateCustomerAsync(CustomerDto dto, CancellationToken token);
     ValueTask<Result<bool>> DeleteCustomerAsync(int id, CancellationToken token);
+    ValueTask<int> AddOrderAsync(OrderDto dto, CancellationToken token);
 }

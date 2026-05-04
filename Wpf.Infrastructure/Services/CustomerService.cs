@@ -13,7 +13,8 @@ namespace Wpf.Infrastructure.Services;
 
 public class CustomerService(
     IDbContextFactory<AppDbContext> dbContextFactory,
-    IValidator<CustomerDto> validator ,
+    IValidator<CustomerDto> validator,
+    IValidator<OrderDto> orderValidator,
     CustomerMapper customerMapper,
     OrderMapper orderMapper) : ICustomerService
 {
@@ -21,6 +22,7 @@ public class CustomerService(
     private readonly CustomerMapper _customerMapper = customerMapper;
     private readonly OrderMapper _orderMapper = orderMapper;
     private readonly IValidator<CustomerDto> _customerValidator = validator;
+    private readonly IValidator<OrderDto> _orderValidator = orderValidator;
 
     public async ValueTask<IReadOnlyList<CustomerDto>> GetAllCustomersAsync(CancellationToken cancellationToken)
     {
@@ -91,5 +93,24 @@ public class CustomerService(
         db.Customers.Remove(entity);
         await db.SaveChangesAsync(token);
         return Result<bool>.Success(true);
+    }
+
+    public async ValueTask<int> AddOrderAsync(OrderDto dto, CancellationToken token)
+    {
+        var result = _orderValidator.Validate(dto);
+        if (!result.IsValid)
+            throw new ValidationException(result.Errors);
+
+        using var db = await _dbContextFactory.CreateDbContextAsync(token);
+        var customer = await db.Customers
+            .Include(c => c.Orders)
+            .FirstOrDefaultAsync(c => c.Id == dto.CustomerId, token);
+
+        if (customer is null)
+            throw new InvalidOperationException("Customer not found.");
+
+        customer.AddOrder(dto.Description);
+        await db.SaveChangesAsync(token);
+        return customer.Orders.Last().Id;
     }
 }

@@ -11,6 +11,7 @@ using Wpf.Application.DTOs;
 using Wpf.Application.Interfaces;
 
 using WpfAppCleanArchitecture.Dialogs;
+using WpfAppCleanArchitecture.Resources;
 
 namespace WpfAppCleanArchitecture.ViewModels;
 
@@ -25,7 +26,33 @@ public partial class MainViewModel(ICustomerService customerService) : Observabl
     private CustomerDto? selectedCustomer;
 
     [ObservableProperty]
+    private ObservableCollection<OrderDto> orders = new();
+
+    [ObservableProperty]
     private ObservableCollection<string> validationMessages = new();
+
+    partial void OnSelectedCustomerChanged(CustomerDto? value)
+    {
+        _ = LoadOrdersAsync(value);
+        AddOrderCommand.NotifyCanExecuteChanged();
+    }
+
+    private async Task LoadOrdersAsync(CustomerDto? customer)
+    {
+        Orders.Clear();
+        if (customer is null) return;
+
+        try
+        {
+            var result = await _customerService.GetOrdersByCustomerIdAsync(customer.Id, CancellationToken.None);
+            foreach (var order in result)
+                Orders.Add(order);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(Strings.ErrorLoadingOrders + ex.Message);
+        }
+    }
 
     [RelayCommand]
     public async Task LoadCustomersAsync()
@@ -125,4 +152,32 @@ public partial class MainViewModel(ICustomerService customerService) : Observabl
 
         MessageBox.Show(message, "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
     }
+
+    [RelayCommand(CanExecute = nameof(CanAddOrder))]
+    public async Task AddOrderAsync()
+    {
+        if (SelectedCustomer is null) return;
+
+        var dialog = new OrderDialog();
+        if (dialog.ShowDialog() == true)
+        {
+            try
+            {
+                var dto = dialog.ViewModel.BuildDto(SelectedCustomer.Id);
+                var id = await _customerService.AddOrderAsync(dto, CancellationToken.None);
+                dto.Id = id;
+                Orders.Add(dto);
+            }
+            catch (ValidationException ex)
+            {
+                ShowValidationErrors(ex);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Strings.ErrorAddingOrder + ex.Message);
+            }
+        }
+    }
+
+    private bool CanAddOrder() => SelectedCustomer is not null;
 }

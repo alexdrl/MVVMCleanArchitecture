@@ -40,10 +40,16 @@
   <data name="ButtonSave" xml:space="preserve">
     <value>Guardar</value>
   </data>
+  <data name="ButtonAddOrder" xml:space="preserve">
+    <value>Añadir Pedido</value>
+  </data>
 
   <!-- Labels -->
   <data name="LabelCustomerName" xml:space="preserve">
     <value>Nombre del Cliente:</value>
+  </data>
+  <data name="LabelOrderDescription" xml:space="preserve">
+    <value>Descripción:</value>
   </data>
   <data name="LabelLastName" xml:space="preserve">
     <value>Apellido:</value>
@@ -61,5 +67,14 @@
   </data>
   <data name="ColumnDescription" xml:space="preserve">
     <value>Descripción</value>
+  </data>
+  <data name="WindowTitleOrder" xml:space="preserve">
+    <value>Añadir Pedido</value>
+  </data>
+  <data name="ErrorLoadingOrders" xml:space="preserve">
+    <value>Error al cargar pedidos: </value>
+  </data>
+  <data name="ErrorAddingOrder" xml:space="preserve">
+    <value>Error al añadir pedido: </value>
   </data>
 </root>

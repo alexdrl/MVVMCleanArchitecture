@@ -1,0 +1,29 @@
+<Window x:Class="WpfAppCleanArchitecture.Dialogs.OrderDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:WpfAppCleanArchitecture.ViewModels"
+        xmlns:res="clr-namespace:WpfAppCleanArchitecture.Resources"
+        mc:Ignorable="d"
+        Title="{x:Static res:Strings.WindowTitleOrder}" Height="160" Width="350"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        d:DataContext="{d:DesignInstance Type=vm:OrderDialogViewModel, IsDesignTimeCreatable=False}">
+    <StackPanel Margin="20">
+        <TextBlock Text="{x:Static res:Strings.LabelOrderDescription}" />
+        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="{x:Static res:Strings.ButtonSave}"
+                    Width="75"
+                    Margin="0,0,10,0"
+                    IsDefault="True"
+                    Command="{Binding SaveCommand}"
+                    IsEnabled="{Binding CanSave}" />
+            <Button Content="{x:Static res:Strings.ButtonCancel}"
+                    Width="75"
+                    IsCancel="True"
+                    Command="{Binding CancelCommand}" />
+        </StackPanel>
+    </StackPanel>
+</Window>
