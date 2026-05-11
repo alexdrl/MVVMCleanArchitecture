@@ -12,12 +12,22 @@ using Wpf.Application.Interfaces;
 
 using WpfAppCleanArchitecture.Dialogs;
 using WpfAppCleanArchitecture.Resources;
+using WpfAppCleanArchitecture.Services;
 
 namespace WpfAppCleanArchitecture.ViewModels;
 
-public partial class MainViewModel(ICustomerService customerService) : ObservableObject
+public partial class MainViewModel : ObservableObject
 {
-    private readonly ICustomerService _customerService = customerService;
+    private readonly ICustomerService _customerService;
+    private readonly ILoadingService _loadingService;
+
+    public MainViewModel(ICustomerService customerService, ILoadingService loadingService)
+    {
+        _customerService = customerService;
+        _loadingService = loadingService;
+    }
+
+    public ILoadingService LoadingService => _loadingService;
 
     [ObservableProperty]
     private ObservableCollection<CustomerDto> customers = new();
@@ -34,9 +44,14 @@ public partial class MainViewModel(ICustomerService customerService) : Observabl
     [ObservableProperty]
     private string searchTerm = string.Empty;
 
+    [ObservableProperty]
+    private string? errorMessage;
+
     [RelayCommand]
     public async Task SearchCustomersAsync()
     {
+        ErrorMessage = null;
+        _loadingService.Show();
         try
         {
             Customers.Clear();
@@ -46,7 +61,11 @@ public partial class MainViewModel(ICustomerService customerService) : Observabl
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Error searching customers: " + ex.Message);
+            ErrorMessage = Strings.ErrorSearchingCustomers + ex.Message;
+        }
+        finally
+        {
+            _loadingService.Hide();
         }
     }
 
@@ -68,6 +87,8 @@ public partial class MainViewModel(ICustomerService customerService) : Observabl
         Orders.Clear();
         if (customer is null) return;
 
+        ErrorMessage = null;
+        _loadingService.Show();
         try
         {
             var result = await _customerService.GetOrdersByCustomerIdAsync(customer.Id, CancellationToken.None);
@@ -76,13 +97,19 @@ public partial class MainViewModel(ICustomerService customerService) : Observabl
         }
         catch (Exception ex)
         {
-            MessageBox.Show(Strings.ErrorLoadingOrders + ex.Message);
+            ErrorMessage = Strings.ErrorLoadingOrders + ex.Message;
+        }
+        finally
+        {
+            _loadingService.Hide();
         }
     }
 
     [RelayCommand]
     public async Task LoadCustomersAsync()
     {
+        ErrorMessage = null;
+        _loadingService.Show();
         try
         {
             Customers.Clear();
@@ -92,7 +119,11 @@ public partial class MainViewModel(ICustomerService customerService) : Observabl
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Error loading customers: " + ex.Message);
+            ErrorMessage = Strings.ErrorLoadingCustomers + ex.Message;
+        }
+        finally
+        {
+            _loadingService.Hide();
         }
     }
 
@@ -100,8 +131,8 @@ public partial class MainViewModel(ICustomerService customerService) : Observabl
     public async Task AddCustomerAsync()
     {
         var newCustomer = new CustomerDto();
-        var dialog = new CustomerDialog(newCustomer);
-        
+        var dialog = new CustomerDialog(newCustomer, _loadingService);
+
         if (dialog.ShowDialog() == true)
         {
             try
@@ -130,7 +161,7 @@ public partial class MainViewModel(ICustomerService customerService) : Observabl
             Name = SelectedCustomer.Name
         };
 
-        var dialog = new CustomerDialog(copy);
+        var dialog = new CustomerDialog(copy, _loadingService);
         if (dialog.ShowDialog() == true)
         {
             try

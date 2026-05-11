@@ -80,10 +80,19 @@
   <data name="WindowTitleOrder" xml:space="preserve">
     <value>Add Order</value>
   </data>
+  <data name="ErrorSearchingCustomers" xml:space="preserve">
+    <value>Error searching customers: </value>
+  </data>
+  <data name="ErrorLoadingCustomers" xml:space="preserve">
+    <value>Error loading customers: </value>
+  </data>
   <data name="ErrorLoadingOrders" xml:space="preserve">
     <value>Error loading orders: </value>
   </data>
   <data name="ErrorAddingOrder" xml:space="preserve">
     <value>Error adding order: </value>
+  </data>
+  <data name="StatusLoading" xml:space="preserve">
+    <value>Loading...</value>
   </data>
 </root>

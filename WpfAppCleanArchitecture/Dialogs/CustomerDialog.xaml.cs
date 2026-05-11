@@ -2,6 +2,7 @@
 
 using Wpf.Application.DTOs;
 
+using WpfAppCleanArchitecture.Services;
 using WpfAppCleanArchitecture.ViewModels;
 
 namespace WpfAppCleanArchitecture.Dialogs;
@@ -14,11 +15,12 @@ public partial class CustomerDialog : Window
     public CustomerDto Customer => _viewModel.Customer;
 
     private readonly CustomerDialogViewModel _viewModel;
-    public CustomerDialog(CustomerDto customer)
+
+    public CustomerDialog(CustomerDto customer, ILoadingService loadingService)
     {
         InitializeComponent();
 
-        _viewModel = new CustomerDialogViewModel(customer);
+        _viewModel = new CustomerDialogViewModel(customer, loadingService);
 
         DataContext = _viewModel;
 
@@ -29,6 +31,8 @@ public partial class CustomerDialog : Window
             else if (e.PropertyName == nameof(CustomerDialogViewModel.DialogResult) && !_viewModel.DialogResult)
                 DialogResult = false;
         };
+
+        Closing += (_, _) => _viewModel.CloseDialog();
     }
 
     private void OnSaveClick(object sender, RoutedEventArgs e)

@@ -70,11 +70,29 @@ namespace WpfAppCleanArchitecture.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Order.
+        /// </summary>
+        public static string ButtonAddOrder {
+            get {
+                return ResourceManager.GetString("ButtonAddOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string ButtonCancel {
             get {
                 return ResourceManager.GetString("ButtonCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string ButtonClear {
+            get {
+                return ResourceManager.GetString("ButtonClear", resourceCulture);
             }
         }
         
@@ -115,6 +133,15 @@ namespace WpfAppCleanArchitecture.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string ButtonSearch {
+            get {
+                return ResourceManager.GetString("ButtonSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string ColumnDescription {
@@ -151,6 +178,42 @@ namespace WpfAppCleanArchitecture.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error adding order: .
+        /// </summary>
+        public static string ErrorAddingOrder {
+            get {
+                return ResourceManager.GetString("ErrorAddingOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error loading orders: .
+        /// </summary>
+        public static string ErrorLoadingOrders {
+            get {
+                return ResourceManager.GetString("ErrorLoadingOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error searching customers: .
+        /// </summary>
+        public static string ErrorSearchingCustomers {
+            get {
+                return ResourceManager.GetString("ErrorSearchingCustomers", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Error loading customers: .
+        /// </summary>
+        public static string ErrorLoadingCustomers {
+            get {
+                return ResourceManager.GetString("ErrorLoadingCustomers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer Name:.
         /// </summary>
         public static string LabelCustomerName {
@@ -165,6 +228,33 @@ namespace WpfAppCleanArchitecture.Resources {
         public static string LabelLastName {
             get {
                 return ResourceManager.GetString("LabelLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        public static string LabelOrderDescription {
+            get {
+                return ResourceManager.GetString("LabelOrderDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search customer....
+        /// </summary>
+        public static string PlaceholderSearchCustomer {
+            get {
+                return ResourceManager.GetString("PlaceholderSearchCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string StatusLoading {
+            get {
+                return ResourceManager.GetString("StatusLoading", resourceCulture);
             }
         }
         
@@ -185,76 +275,13 @@ namespace WpfAppCleanArchitecture.Resources {
                 return ResourceManager.GetString("WindowTitleMain", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add Order.
         /// </summary>
         public static string WindowTitleOrder {
             get {
                 return ResourceManager.GetString("WindowTitleOrder", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Add Order.
-        /// </summary>
-        public static string ButtonAddOrder {
-            get {
-                return ResourceManager.GetString("ButtonAddOrder", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Description:.
-        /// </summary>
-        public static string LabelOrderDescription {
-            get {
-                return ResourceManager.GetString("LabelOrderDescription", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Error loading orders:.
-        /// </summary>
-        public static string ErrorLoadingOrders {
-            get {
-                return ResourceManager.GetString("ErrorLoadingOrders", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Error adding order:.
-        /// </summary>
-        public static string ErrorAddingOrder {
-            get {
-                return ResourceManager.GetString("ErrorAddingOrder", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Search.
-        /// </summary>
-        public static string ButtonSearch {
-            get {
-                return ResourceManager.GetString("ButtonSearch", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Clear.
-        /// </summary>
-        public static string ButtonClear {
-            get {
-                return ResourceManager.GetString("ButtonClear", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Search customer...
-        /// </summary>
-        public static string PlaceholderSearchCustomer {
-            get {
-                return ResourceManager.GetString("PlaceholderSearchCustomer", resourceCulture);
             }
         }
     }

@@ -16,6 +16,7 @@ using Wpf.Infrastructure.Data;
 using Wpf.Infrastructure.Mapping;
 using Wpf.Infrastructure.Services;
 
+using WpfAppCleanArchitecture.Services;
 using WpfAppCleanArchitecture.View;
 using WpfAppCleanArchitecture.ViewModels;
 
@@ -45,6 +46,8 @@ public partial class App : Application
 
                 services.AddDbContextFactory<AppDbContext>(options =>
                     options.UseSqlite("Data Source=app.db"));
+
+                services.AddSingleton<ILoadingService, LoadingService>();
 
                 services.AddSingleton<IValidator<CustomerDto>, CustomerValidator>();
                 services.AddSingleton<IValidator<OrderDto>, OrderValidator>();

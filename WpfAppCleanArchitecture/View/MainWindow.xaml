@@ -12,6 +12,8 @@
         d:DataContext="{d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}">
     <Window.Resources>
         <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <Style x:Key="PlaceholderTextBoxStyle" TargetType="TextBox">
             <Setter Property="Foreground" Value="Black"/>
             <Style.Triggers>
@@ -47,6 +49,14 @@
             <Button Content="{x:Static res:Strings.ButtonCancel}"
                     Command="{Binding CancelLoadingCommand}" />
         </StackPanel>
+
+        <!-- Error Message -->
+        <TextBlock DockPanel.Dock="Top"
+                   Text="{Binding ErrorMessage}"
+                   Foreground="Red"
+                   Margin="10,0,10,4"
+                   TextWrapping="Wrap"
+                   Visibility="{Binding ErrorMessage, Converter={StaticResource NullToVisibilityConverter}}"/>
 
         <!-- Search Bar -->
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10,0,10,5">
@@ -91,6 +101,20 @@
                     <DataGridTextColumn Header="{x:Static res:Strings.ColumnDescription}" Binding="{Binding Description}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
+
+            <!-- Loading Spinner Overlay -->
+            <Grid Grid.ColumnSpan="2"
+                  Visibility="{Binding LoadingService.IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                  Background="#88FFFFFF">
+                <Border CornerRadius="8" Background="White" Width="100" Height="100"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        BorderBrush="#DDDDDD" BorderThickness="1">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ProgressBar IsIndeterminate="True" Width="60" Height="8" Margin="0,0,0,8"/>
+                        <TextBlock Text="{x:Static res:Strings.StatusLoading}" HorizontalAlignment="Center" FontSize="12" Foreground="#555555"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </Grid>
     </DockPanel>
 
