@@ -26,7 +26,8 @@ public class CustomerService(
 
     public async ValueTask<IReadOnlyList<CustomerDto>> GetAllCustomersAsync(CancellationToken cancellationToken)
     {
-        // await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
+        // Delay to demonstrate cancellation support
+        await Task.Delay(TimeSpan.FromSeconds(3), cancellationToken);
         using var db = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
         var entities = await db.Customers
             .AsNoTracking()

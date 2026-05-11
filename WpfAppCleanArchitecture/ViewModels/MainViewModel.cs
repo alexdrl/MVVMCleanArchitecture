@@ -73,7 +73,7 @@ public partial class MainViewModel : ObservableObject
     public async Task ClearSearchAsync()
     {
         SearchTerm = string.Empty;
-        await LoadCustomersAsync();
+        await LoadCustomersAsync(CancellationToken.None);
     }
 
     partial void OnSelectedCustomerChanged(CustomerDto? value)
@@ -105,17 +105,21 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
-    [RelayCommand]
-    public async Task LoadCustomersAsync()
+    [RelayCommand(IncludeCancelCommand = true)]
+    public async Task LoadCustomersAsync(CancellationToken cancellationToken)
     {
         ErrorMessage = null;
         _loadingService.Show();
         try
         {
             Customers.Clear();
-            var result = await _customerService.GetAllCustomersAsync(CancellationToken.None);
+            var result = await _customerService.GetAllCustomersAsync(cancellationToken);
             foreach (var customer in result)
                 Customers.Add(customer);
+        }
+        catch (OperationCanceledException)
+        {
+            ErrorMessage = Strings.LoadingCancelled;
         }
         catch (Exception ex)
         {

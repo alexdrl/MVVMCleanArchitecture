@@ -86,6 +86,9 @@
   <data name="ErrorLoadingCustomers" xml:space="preserve">
     <value>Error loading customers: </value>
   </data>
+  <data name="LoadingCancelled" xml:space="preserve">
+    <value>Loading cancelled.</value>
+  </data>
   <data name="ErrorLoadingOrders" xml:space="preserve">
     <value>Error loading orders: </value>
   </data>

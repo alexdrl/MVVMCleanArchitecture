@@ -187,6 +187,15 @@ namespace WpfAppCleanArchitecture.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error loading customers: .
+        /// </summary>
+        public static string ErrorLoadingCustomers {
+            get {
+                return ResourceManager.GetString("ErrorLoadingCustomers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error loading orders: .
         /// </summary>
         public static string ErrorLoadingOrders {
@@ -201,15 +210,6 @@ namespace WpfAppCleanArchitecture.Resources {
         public static string ErrorSearchingCustomers {
             get {
                 return ResourceManager.GetString("ErrorSearchingCustomers", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Error loading customers: .
-        /// </summary>
-        public static string ErrorLoadingCustomers {
-            get {
-                return ResourceManager.GetString("ErrorLoadingCustomers", resourceCulture);
             }
         }
         
@@ -237,6 +237,15 @@ namespace WpfAppCleanArchitecture.Resources {
         public static string LabelOrderDescription {
             get {
                 return ResourceManager.GetString("LabelOrderDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading cancelled..
+        /// </summary>
+        public static string LoadingCancelled {
+            get {
+                return ResourceManager.GetString("LoadingCancelled", resourceCulture);
             }
         }
         

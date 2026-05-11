@@ -86,4 +86,7 @@
   <data name="ErrorAddingOrder" xml:space="preserve">
     <value>Error al añadir pedido: </value>
   </data>
+  <data name="LoadingCancelled" xml:space="preserve">
+    <value>Carga cancelada.</value>
+  </data>
 </root>
