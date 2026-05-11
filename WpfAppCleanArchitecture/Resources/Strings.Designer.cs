@@ -230,5 +230,32 @@ namespace WpfAppCleanArchitecture.Resources {
                 return ResourceManager.GetString("ErrorAddingOrder", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string ButtonSearch {
+            get {
+                return ResourceManager.GetString("ButtonSearch", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string ButtonClear {
+            get {
+                return ResourceManager.GetString("ButtonClear", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Search customer...
+        /// </summary>
+        public static string PlaceholderSearchCustomer {
+            get {
+                return ResourceManager.GetString("PlaceholderSearchCustomer", resourceCulture);
+            }
+        }
     }
 }

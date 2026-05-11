@@ -31,6 +31,32 @@ public partial class MainViewModel(ICustomerService customerService) : Observabl
     [ObservableProperty]
     private ObservableCollection<string> validationMessages = new();
 
+    [ObservableProperty]
+    private string searchTerm = string.Empty;
+
+    [RelayCommand]
+    public async Task SearchCustomersAsync()
+    {
+        try
+        {
+            Customers.Clear();
+            var result = await _customerService.SearchCustomersAsync(SearchTerm, CancellationToken.None);
+            foreach (var customer in result)
+                Customers.Add(customer);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Error searching customers: " + ex.Message);
+        }
+    }
+
+    [RelayCommand]
+    public async Task ClearSearchAsync()
+    {
+        SearchTerm = string.Empty;
+        await LoadCustomersAsync();
+    }
+
     partial void OnSelectedCustomerChanged(CustomerDto? value)
     {
         _ = LoadOrdersAsync(value);

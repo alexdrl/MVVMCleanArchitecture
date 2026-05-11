@@ -12,6 +12,24 @@
         d:DataContext="{d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}">
     <Window.Resources>
         <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
+        <Style x:Key="PlaceholderTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Foreground" Value="Black"/>
+            <Style.Triggers>
+                <Trigger Property="Text" Value="">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <VisualBrush AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                <VisualBrush.Visual>
+                                    <TextBlock Foreground="Gray" FontStyle="Italic"
+                                               Text="{x:Static res:Strings.PlaceholderSearchCustomer}"
+                                               Margin="5,0,0,0"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <DockPanel>
         <!-- Toolbar -->
@@ -28,6 +46,20 @@
                     Command="{Binding LoadCustomersCommand}" />
             <Button Content="{x:Static res:Strings.ButtonCancel}"
                     Command="{Binding CancelLoadingCommand}" />
+        </StackPanel>
+
+        <!-- Search Bar -->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10,0,10,5">
+            <TextBox Width="200"
+                     Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource PlaceholderTextBoxStyle}"
+                     VerticalContentAlignment="Center"
+                     Margin="0,0,5,0"/>
+            <Button Content="{x:Static res:Strings.ButtonSearch}"
+                    Command="{Binding SearchCustomersCommand}"
+                    Margin="0,0,5,0"/>
+            <Button Content="{x:Static res:Strings.ButtonClear}"
+                    Command="{Binding ClearSearchCommand}"/>
         </StackPanel>
 
         <Grid Margin="10">

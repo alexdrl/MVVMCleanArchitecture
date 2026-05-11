@@ -113,4 +113,16 @@ public class CustomerService(
         await db.SaveChangesAsync(token);
         return customer.Orders.Last().Id;
     }
+
+    public async ValueTask<IReadOnlyList<CustomerDto>> SearchCustomersAsync(string searchTerm, CancellationToken cancellationToken)
+    {
+        using var db = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+        var term = searchTerm?.Trim() ?? string.Empty;
+        var entities = await db.Customers
+            .AsNoTracking()
+            .Where(c => c.Name.Contains(term) || c.LastName.Contains(term))
+            .ToListAsync(cancellationToken);
+
+        return _customerMapper.ToDtoList(entities);
+    }
 }

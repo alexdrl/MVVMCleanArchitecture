@@ -43,6 +43,15 @@
   <data name="ButtonAddOrder" xml:space="preserve">
     <value>Añadir Pedido</value>
   </data>
+  <data name="ButtonSearch" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="ButtonClear" xml:space="preserve">
+    <value>Limpiar</value>
+  </data>
+  <data name="PlaceholderSearchCustomer" xml:space="preserve">
+    <value>Buscar cliente...</value>
+  </data>
 
   <!-- Labels -->
   <data name="LabelCustomerName" xml:space="preserve">
